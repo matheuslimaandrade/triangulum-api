@@ -1,24 +1,24 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-// Utiliza as variáveis de ambiente para obter as configurações do banco de dados
-const sequelize = new Sequelize(
-  process.env.POSTGRES_DATABASE,
-  process.env.POSTGRES_USER,
-  process.env.POSTGRES_PASSWORD,
-  {
-    host: process.env.POSTGRES_HOST,
-    dialect: 'postgres',
-  }
-);
+const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+      connectTimeout: 60000, 
+    }
+  },
+});
 
-// Defina os modelos aqui (Usuario, Tarefa, ListaTarefas)
+// Restante do seu código do Sequelize...
+
 
 const Usuario = sequelize.define('Usuario', {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // Adicione outros campos conforme necessário
 });
 
 const Tarefa = sequelize.define('Tarefa', {
@@ -30,7 +30,6 @@ const Tarefa = sequelize.define('Tarefa', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  // Adicione outros campos conforme necessário
 });
 
 const ListaTarefas = sequelize.define('ListaTarefas', {
@@ -38,17 +37,14 @@ const ListaTarefas = sequelize.define('ListaTarefas', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // Adicione outros campos conforme necessário
 });
 
-// Relacionamentos entre os modelos
 Usuario.hasMany(ListaTarefas);
 ListaTarefas.belongsTo(Usuario);
 
 ListaTarefas.hasMany(Tarefa);
 Tarefa.belongsTo(ListaTarefas);
 
-// Sincronize os modelos com o banco de dados
 sequelize.sync({ force: true })
   .then(() => {
     console.log('Modelos sincronizados com o banco de dados.');
