@@ -1,9 +1,15 @@
-// models.js
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sua_base_de_dados', 'seu_usuario', 'sua_senha', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
+
+// Utiliza as variáveis de ambiente para obter as configurações do banco de dados
+const sequelize = new Sequelize(
+  process.env.POSTGRES_DATABASE,
+  process.env.POSTGRES_USER,
+  process.env.POSTGRES_PASSWORD,
+  {
+    host: process.env.POSTGRES_HOST,
+    dialect: 'postgres',
+  }
+);
 
 // Defina os modelos aqui (Usuario, Tarefa, ListaTarefas)
 
