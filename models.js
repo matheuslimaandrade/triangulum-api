@@ -11,9 +11,6 @@ const sequelize = new Sequelize(process.env.POSTGRES_URL, {
   },
 });
 
-// Restante do seu código do Sequelize...
-
-
 const Usuario = sequelize.define('Usuario', {
   nome: {
     type: DataTypes.STRING,
