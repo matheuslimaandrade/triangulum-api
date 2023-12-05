@@ -5,21 +5,22 @@ const bodyParser = require('body-parser');
 const { Usuario, Tarefa, ListaTarefas } = require('./models');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 
 app.use(bodyParser.json());
 
-// Rotas aqui (CRUD para Usuario, Tarefa, ListaTarefas)
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
 
 
-// Rotas para Usuario
+app.get('/', (req, res) => {
+  res.send('API para TODO-LIST');
+});
 
-// Criar um novo usuário
+// criar novo user
 app.post('/usuarios', async (req, res) => {
     try {
       const usuario = await Usuario.create(req.body);
@@ -30,7 +31,7 @@ app.post('/usuarios', async (req, res) => {
     }
   });
   
-  // Obter todos os usuários
+  // get todos os users
   app.get('/usuarios', async (req, res) => {
     try {
       const usuarios = await Usuario.findAll();
@@ -41,7 +42,7 @@ app.post('/usuarios', async (req, res) => {
     }
   });
   
-  // Obter um usuário específico por ID
+  // get user por ID
   app.get('/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -57,7 +58,7 @@ app.post('/usuarios', async (req, res) => {
     }
   });
   
-  // Atualizar um usuário por ID
+  // put user por ID
   app.put('/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -76,7 +77,7 @@ app.post('/usuarios', async (req, res) => {
     }
   });
   
-  // Excluir um usuário por ID
+  // delete user por ID
   app.delete('/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -94,9 +95,9 @@ app.post('/usuarios', async (req, res) => {
     }
   });
   
-  // Rotas para Tarefa
+  // tarefa
 
-// Criar uma nova tarefa
+// post nova tarefa
 app.post('/tarefas', async (req, res) => {
     try {
       const tarefa = await Tarefa.create(req.body);
@@ -107,7 +108,7 @@ app.post('/tarefas', async (req, res) => {
     }
   });
   
-  // Obter todas as tarefas
+  // get tarefa
   app.get('/tarefas', async (req, res) => {
     try {
       const tarefas = await Tarefa.findAll();
@@ -118,7 +119,7 @@ app.post('/tarefas', async (req, res) => {
     }
   });
   
-  // Obter uma tarefa específica por ID
+  // get tarefa por id
   app.get('/tarefas/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -134,7 +135,7 @@ app.post('/tarefas', async (req, res) => {
     }
   });
   
-  // Atualizar uma tarefa por ID
+  // put tarefa por id
   app.put('/tarefas/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -153,7 +154,7 @@ app.post('/tarefas', async (req, res) => {
     }
   });
   
-  // Excluir uma tarefa por ID
+  // delete tarefa por id
   app.delete('/tarefas/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -171,12 +172,9 @@ app.post('/tarefas', async (req, res) => {
     }
   });
   
-  // Rotas para ListaTarefas
+//Lista Tarefas
   
-
-// Rotas para ListaTarefas
-
-// Criar uma nova lista de tarefas
+// post lista tarefas
 app.post('/listatarefas', async (req, res) => {
     try {
       const listaTarefas = await ListaTarefas.create(req.body);
@@ -187,7 +185,7 @@ app.post('/listatarefas', async (req, res) => {
     }
   });
   
-  // Obter todas as listas de tarefas
+  // get lista tarefas
   app.get('/listatarefas', async (req, res) => {
     try {
       const listasTarefas = await ListaTarefas.findAll();
@@ -198,7 +196,7 @@ app.post('/listatarefas', async (req, res) => {
     }
   });
   
-  // Obter uma lista de tarefas específica por ID
+  // get lista tarefas por id
   app.get('/listatarefas/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -216,7 +214,7 @@ app.post('/listatarefas', async (req, res) => {
     }
   });
   
-  // Atualizar uma lista de tarefas por ID
+  // put lista tarefas por id
   app.put('/listatarefas/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -235,7 +233,7 @@ app.post('/listatarefas', async (req, res) => {
     }
   });
   
-  // Excluir uma lista de tarefas por ID
+  // delete lista tarefas por id
   app.delete('/listatarefas/:id', async (req, res) => {
     const { id } = req.params;
     try {
